@@ -1,0 +1,45 @@
+#!/bin/bash
+
+## generic lxc launch script with default settings good for dev
+
+
+. $(dirname $0)/wait-for-network.sh
+
+IMG=$1
+CTR=$2
+if [ -z "$CTR"]; then
+	echo
+	echo "usage: $0 <image name> <container name>"
+	echo
+	echo "available images: "
+	lxc image list
+	exit
+fi
+
+# create container from local image
+lxc init $IMG $CTR
+
+# attach external directory for storage
+#if [ -d /data/local/volumes/$CTR ]; then
+#        echo "attaching /data/local/volumes/$CTR"
+#	lxc config device add $CTR data disk \
+#    		path=/var/lib/pgsql/data source=/data/local/volumes/$CTR
+#else
+#	echo "not found: /data/local/volumes/$CTR"
+#	exit -1 
+#fi
+
+# set low resource limits for dev containers 
+lxc config set $CTR limits.cpu 2
+lxc config set $CTR limits.memory 256MB
+lxc config set $CTR limits.memory.enforce soft
+lxc config set $CTR limits.memory.swap false
+
+#  increase the I/O priority (for DB containers) to the maximum
+#lxc config set $CTR limits.disk.priority 10
+
+# start container
+lxc start $CTR
+
+waitForNetwork $CTR
+
