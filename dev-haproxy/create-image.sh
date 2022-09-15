@@ -20,25 +20,12 @@ lxc start $CTR
 
 waitForNetwork $CTR
 
-echo "adding yum repos..."
-lxc exec $CTR -- yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-
-echo "updating $CTR ..."
-lxc exec $CTR -- yum -y update
-
 echo "installing haproxy ..."
 lxc exec $CTR -- yum -y install haproxy
 
 echo "inject custom systemd unit for HAProxy to enable x509 proxy certificates"
 lxc exec $CTR mkdir /etc/systemd/system/haproxy.service.d
 lxc file push system/override.conf $CTR/etc/systemd/system/haproxy.service.d/
-
-echo "inject extra CA certficates"
-for cf in ca-trust/*.*; do
-    echo "inject CA: $cf"
-    lxc file push $cf $CTR/etc/pki/ca-trust/source/anchors/
-done
-lxc exec $CTR update-ca-trust
 
 for cf in config/*.*; do 
     echo "inject config: $cf"
@@ -55,7 +42,7 @@ lxc stop $CTR
 
 ## publish container as a new image in local image store
 echo "publishing $CTR ..."
-lxc publish $CTR --alias $IMG description="Centos 7 + HAProxy"
+lxc publish $CTR --alias $IMG description="Centos7 + HAProxy"
 lxc delete $CTR
 echo "published: $IMG"
 
