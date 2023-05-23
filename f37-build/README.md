@@ -1,0 +1,5 @@
+# f37-build 
+
+Creates and leaves behind a running container suitable for building RPM packages.
+
+Aimed mainly at building pgsphere so spec file included

@@ -31,7 +31,7 @@ echo "creating: $CTR using $CONFIG"
 lxc init $IMG $CTR || exit
 
 # inject init-content-sh
-lxc file push $CONFIG $CTR/tmp/init-content-schemas.sh
+lxc file push $CONFIG $CTR/usr/local/bin/init-content-schemas.sh
 
 # attach external directory for storage
 #if [ -d /data/local/volumes/$CTR ]; then
@@ -52,7 +52,10 @@ lxc config set $CTR limits.memory.swap false
 #  increase the I/O priority of a DB container to the maximum
 #lxc config set $CTR limits.disk.priority 10
 
+
 # start container
 lxc start $CTR || exit
 waitForNetwork $CTR
+
+lxc exec $CTR -- cat /usr/local/bin/init-content-schemas.sh
 
