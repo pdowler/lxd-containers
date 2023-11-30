@@ -1,0 +1,2 @@
+CATALOGS="content"
+SCHEMAS=""
