@@ -1,6 +1,6 @@
-# dev-tapdb-pg12 
+# pg15-init
 
-Builds a postgresql server image with a simple database init suitable for development.
+First-boot init system for a simple database suitable for development.
 
 ## Expected deployment
 This postgresql instance is designed for development support and has a very low level of
