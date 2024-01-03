@@ -1,5 +1,5 @@
-# base-pg15
+# pg15
 
-Just the software: base PostgreSQL-15.x database server 
-with postgresql-contrib and pgsphere-1.2 extensions.
+Builds a developer PostgreSQL-15.x database server image with postgresql-contrib and pgsphere extensions.
 
+This also includes [pg15-init](../pg15-init/) by executing the `add-to-image.sh` script.
