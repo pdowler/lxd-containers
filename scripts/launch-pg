@@ -32,8 +32,6 @@ lxc init $IMG $CTR || exit
 
 # inject init-content-sh
 lxc file push $CONFIG $CTR/usr/local/bin/init-content-schemas.sh
-## compat for 12
-#lxc file push $CONFIG $CTR/tmp/init-content-schemas.sh
 
 # attach external directory for storage
 #if [ -d /data/local/volumes/$CTR ]; then
