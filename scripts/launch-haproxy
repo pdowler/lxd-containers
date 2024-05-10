@@ -1,0 +1,49 @@
+#!/bin/bash
+
+. $(dirname $0)/wait-for-network.sh
+
+IMG=$1
+CTR=$2
+CERT=$3
+
+if [ -z "$IMG" ]; then
+        echo "usage: $0 <image> <container> <dev-server-cert.pem>"
+        exit
+fi
+if [ -z "$CTR" ]; then
+	echo "usage: $0 <image> <container> <dev-server-cert.pem>"
+	exit
+fi
+if [ -z "$CERT" ]; then
+	echo "usage: $0 <image> <container> <dev-server-cert.pem>"
+	exit
+fi
+
+if [ ! -f $CERT ]; then
+    echo "not found: $CERT"
+    exit
+fi
+
+echo "creating: $CTR using $CERT"
+
+
+# create container from local image
+lxc init $IMG $CTR || exit
+
+# inject init-content-sh
+lxc file push $CERT $CTR/etc/haproxy/dev-server-cert.pem
+for ca in /etc/pki/ca-trust/source/anchors/*.*; do
+  echo "adding CA cert: $ca"
+  echo lxc file push $ca ${CTR}${ca}
+done
+
+# set resource limits 
+lxc config set $CTR limits.cpu 2
+lxc config set $CTR limits.memory 256MB
+lxc config set $CTR limits.memory.enforce soft
+lxc config set $CTR limits.memory.swap false
+
+# start container
+lxc start $CTR || exit
+waitForNetwork $CTR
+

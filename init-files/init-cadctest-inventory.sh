@@ -1,0 +1,2 @@
+CATALOGS="cadctest"
+SCHEMAS="inventory"
