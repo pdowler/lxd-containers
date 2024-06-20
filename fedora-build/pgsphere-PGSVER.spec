@@ -9,7 +9,7 @@ Release:	1%{?dist}
 License:	BSD
 Group:		Applications/Databases
 Source0:	%{sname}-%{version}.tar.gz
-URL:		https://github.com/pdowler/pgsphere
+URL:		https://github.com/postgrespro/pgsphere.git
 BuildRequires:	postgresql%{pgmajorversion}-devel
 Requires:	postgresql%{pgmajorversion}-server
 Requires:	healpix-c++
