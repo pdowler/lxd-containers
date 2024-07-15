@@ -1,4 +1,4 @@
-# f37-build 
+# fedora-build 
 
 Creates and leaves behind a running container suitable for building RPM packages.
 

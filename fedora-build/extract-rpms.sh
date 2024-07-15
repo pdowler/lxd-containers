@@ -1,10 +1,11 @@
 #!/bin/bash
 
-CTR=f38-build
+LXC=incus
+CTR=f40-build
 
-PKGS=$(lxc exec $CTR -- find /root/rpmbuild/RPMS -type f | grep -v debug)
+PKGS=$($LXC exec $CTR -- find /root/rpmbuild/RPMS -type f | grep -v debug)
 for rpm in ${PKGS}; do
 	echo $rpm
-	lxc file pull ${CTR}${rpm} .
+	$LXC file pull ${CTR}${rpm} .
 done
 
