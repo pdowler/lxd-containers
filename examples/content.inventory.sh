@@ -1,2 +1,0 @@
-CATALOGS="content"
-SCHEMAS="inventory"
