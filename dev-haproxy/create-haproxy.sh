@@ -1,5 +1,7 @@
 #!/bin/bash
 
+## create a new HAproxy container
+
 . ../scripts/wait-for-network.sh
 
 CTR=haproxy-f40
@@ -27,7 +29,7 @@ cat config/haproxy.cfg config/haproxy-rules.conf config/haproxy-backends.conf > 
 incus file push tmp.cfg $CTR/etc/haproxy/haproxy.cfg
 \rm tmp.cfg
 
-incus file push $HOME/work/dev-server-cert.pem $CTR/etc/haproxy/
+incus file push $HOME/work/etc/dev-server-cert.pem $CTR/etc/haproxy/
 
 echo "adding CA certs"
 for f in $HOME/work/etc/cacerts/*; do
@@ -41,5 +43,5 @@ incus exec $CTR systemctl start haproxy
 
 incus exec $CTR systemctl status haproxy
 
-
+incus list $CTR
 
