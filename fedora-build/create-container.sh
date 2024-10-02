@@ -23,14 +23,15 @@ waitForNetwork $CTR
 echo "adding yum repos..."
 $LXC exec $CTR -- dnf -y install https://download.postgresql.org/pub/repos/yum/reporpms/F-40-x86_64/pgdg-fedora-repo-latest.noarch.rpm
 
-echo "installing packages..."
-$LXC exec $CTR -- dnf -y install which rpm-build rpmdevtools rpmlint make clang gcc gcc-c++ ccache git bison flex
+echo "installing dev tools..."
+$LXC exec $CTR -- dnf -y install which rpm-build rpmdevtools rpmlint make clang gcc gcc-c++ ccache git bison flex 
+$LXC exec $CTR -- dnf -y install java-11-openjdk-headless java-11-openjdk-devel
 $LXC exec $CTR -- rpmdev-setuptree
 
-echo "done build system setup"
+## gradle wrapper included in source repos
 
-echo "installing pgsphere dependencies..."
-$LXC exec $CTR -- dnf -y install postgresql15-devel libpq5-devel healpix-c++-devel zlib-devel
+echo "installing devel dependencies..."
+$LXC exec $CTR -- dnf -y install postgresql15-devel libpq5-devel healpix-c++-devel zlib-devel wcslib-devel erfa-devel
 $LXC exec $CTR -- mkdir -p /usr/lib64/pgsql/
 $LXC exec $CTR -- ln -s /usr/pgsql-15/lib/pgxs /usr/lib64/pgsql/pgxs
 

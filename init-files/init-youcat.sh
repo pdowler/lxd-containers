@@ -1,2 +1,2 @@
 CATALOGS="content"
-SCHEMAS="youcat"
+SCHEMAS="int_test_schema"
