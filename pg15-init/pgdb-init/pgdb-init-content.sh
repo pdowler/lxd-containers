@@ -30,5 +30,9 @@ for DBNAME in $CATALOGS; do
         psql -d $DBNAME --command "CREATE SCHEMA $SN AUTHORIZATION cadmin;"
     done
 
+    # youcat admin
+    # psql -d $DBNAME --command "GRANT CREATE ON DATABASE $DBNAME TO tapadm;"
+
+
 done
 

@@ -4,13 +4,13 @@ LXC=incus
 
 . ../scripts/wait-for-network.sh
 
-CTR=f40-build
+CTR=f42-build
 
 $LXC list $CTR | grep -q $CTR
 if [ $? == 0 ]; then
 	echo "found: $CTR"
 else
-	$LXC init images:fedora/40 $CTR 
+	$LXC init images:fedora/42 $CTR 
 	echo "created: $CTR"
 fi
 
@@ -21,11 +21,11 @@ $LXC start $CTR
 waitForNetwork $CTR
 
 echo "adding yum repos..."
-$LXC exec $CTR -- dnf -y install https://download.postgresql.org/pub/repos/yum/reporpms/F-40-x86_64/pgdg-fedora-repo-latest.noarch.rpm
+$LXC exec $CTR -- dnf -y install https://download.postgresql.org/pub/repos/yum/reporpms/F-42-x86_64/pgdg-fedora-repo-latest.noarch.rpm
 
 echo "installing dev tools..."
 $LXC exec $CTR -- dnf -y install which rpm-build rpmdevtools rpmlint make clang gcc gcc-c++ ccache git bison flex 
-$LXC exec $CTR -- dnf -y install java-11-openjdk-headless java-11-openjdk-devel
+$LXC exec $CTR -- dnf -y install java-21-openjdk-headless java-21-openjdk-devel
 $LXC exec $CTR -- rpmdev-setuptree
 
 ## gradle wrapper included in source repos
