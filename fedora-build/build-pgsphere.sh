@@ -29,7 +29,7 @@ vi SPECS/pgsphere-${PGSVER}.spec
 
 ## install (-bi) to figure out current files, then build package (-bb)
 QA_RPATHS=$((0x0002)) rpmbuild -bi /root/rpmbuild/SPECS/pgsphere-${PGSVER}.spec
-pushd /root/rpmbuild/BUILDROOT/pgsphere15-${PGSVER}-1.fc40.x86_64/usr
+pushd /root/rpmbuild/BUILD/pgsphere15-${PGSVER}-build/BUILDROOT/usr
 find pgsql-15 -type f | sed 's/pgsql-15/%{pginstdir}/g' >> /root/rpmbuild/SPECS/pgsphere-${PGSVER}.spec
 popd
 ## make the package and cleanup
