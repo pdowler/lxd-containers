@@ -9,7 +9,7 @@ lxc list $CTR | grep -q $CTR
 if [ $? == 0 ]; then
 	echo "found: $CTR"
 else
-	lxc init images:fedora/40 $CTR 
+	lxc init images:fedora/42 $CTR 
 	echo "created: $CTR"
 fi
 
@@ -20,12 +20,12 @@ lxc start $CTR
 waitForNetwork $CTR
 
 echo "adding yum repos..."
-lxc exec $CTR -- dnf -y install https://download.postgresql.org/pub/repos/yum/reporpms/F-40-x86_64/pgdg-fedora-repo-latest.noarch.rpm
+lxc exec $CTR -- dnf -y install https://download.postgresql.org/pub/repos/yum/reporpms/F-42-x86_64/pgdg-fedora-repo-latest.noarch.rpm
 
 echo "installing PG packages..."
 lxc exec $CTR -- dnf -y install postgresql15-server postgresql15-contrib
 
-lxc exec $CTR -- dnf -y install https://ws-cadc.canfar.net/vault/files/pdowler/rpms/pgsphere15-1.4.2-1.fc40.x86_64.rpm
+lxc exec $CTR -- dnf -y install https://ws-cadc.canfar.net/vault/files/pdowler/rpms/pgsphere15-1.4.2-1.fc42.x86_64.rpm
 
 lxc exec $CTR -- dnf -y clean all
 
